@@ -267,10 +267,16 @@ std::unique_ptr<LEDStripEffect> GetSpectrumAnalyzer(CRGB color)
 // A list of internal effects, if any.  
 DRAM_ATTR LEDStripEffect * AllEffects[] =
 {
-  #if DEMO 
+#if DEMO
 
     new RainbowFillEffect(6, 2),
     new ClassicFireEffect(),
+
+#elif CUPCABINET
+
+    new ColorFillEffect(CRGB::White, 1, "White Color Fill"),
+    new ClassicFireEffect(),
+
 
 #elif TTGO 
 
@@ -594,4 +600,10 @@ void InitEffectsManager()
     g_pEffectManager = make_unique<EffectManager>(AllEffects, ARRAYSIZE(AllEffects), g_pStrands);
     if (false == g_pEffectManager->Init())
         throw runtime_error("Could not initialize effect manager");
+    for (int i = 0; i < ARRAYSIZE(AllEffects); i++) {
+        if (i > 0)
+        {
+            g_pEffectManager->DisableEffect(i);        
+        }
+    }
 }

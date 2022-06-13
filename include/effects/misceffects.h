@@ -174,15 +174,16 @@ protected:
 
 	int _everyNth;
 	CRGB _color;
+	const char *_name;
 
   public:
-	
-    ColorFillEffect(CRGB color = CRGB(246,200,160), int everyNth = 10)
-	  : LEDStripEffect("Color Fill"),
-	    _everyNth(everyNth),
-		_color(color)
-	{
-		debugV("Color Fill constructor");
+	  ColorFillEffect(CRGB color = CRGB(246, 200, 160), int everyNth = 10, const char *name = "Color Fill")
+		  : LEDStripEffect(name),
+			_everyNth(everyNth),
+			_color(color),
+			_name(name)
+	  {
+		  debugV("Color Fill constructor");
 	}
 
 	virtual void Draw()
@@ -193,7 +194,7 @@ protected:
 
     virtual const char * FriendlyName() const
     {
-        return "Color Fill Effect";
+        return _name;
     }
 };
 

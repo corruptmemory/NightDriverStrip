@@ -234,6 +234,44 @@ extern RemoteDebug Debug;           // Let everyone in the project know about it
     // get the chip's IP by watching the serial output or checking your router for the DHCP given to 'LEDWifi'
 
     #define ENABLE_WEBSERVER        0   // Turn on the internal webserver
+#elif CUPCABINET
+
+    // This is a simple demo configuration.  To build, simply connect the data lead from a WS2812B
+    // strip to pin 5.  This does not use the OLED, LCD, or anything fancy, it simply drives the
+    // LEDs with a simple rainbow effect as specified in effects.cpp for DEMO.
+    //
+    // Please ensure you supply sufficent power to your strip, as even the DEMO of 144 LEDs, if set
+    // to white, would overload a USB port.
+
+    #define cszHostname "cup-cabinet"
+    #define MATRIX_WIDTH            10
+    #define MATRIX_HEIGHT           1
+    #define NUM_LEDS                (MATRIX_WIDTH*MATRIX_HEIGHT)
+    #define NUM_CHANNELS            1
+
+    #define POWER_LIMIT_MW       15000   // 1 amp supply at 5 volts assumed
+
+    // Once you have a working project, selectively enable various additional features by setting
+    // them to 1 in the list below.  This DEMO config assumes no audio (mic), or screen, etc.
+
+    #define ENABLE_WIFI             1   // Connect to WiFi
+    #define INCOMING_WIFI_ENABLED   0   // Accepting incoming color data and commands
+    #define TIME_BEFORE_LOCAL       0   // How many seconds before the lamp times out and shows local content
+    #define ENABLE_NTP              1   // Set the clock from the web
+    #define ENABLE_OTA              0   // Accept over the air flash updates
+
+    #if M5STICKC || M5STICKCPLUS
+        #define LED_PIN0 32
+    #else
+        #define LED_PIN0 5
+    #endif
+
+    // The webserver serves files from its SPIFFS filesystem, such as index.html, and those files must be
+    // uploaded to SPIFFS with the "Upload Filesystem Image" command before it can work.  When running
+    // you should be able to see/select the list of effects by visiting the chip's IP in a browser.  You can
+    // get the chip's IP by watching the serial output or checking your router for the DHCP given to 'LEDWifi'
+
+    #define ENABLE_WEBSERVER        1   // Turn on the internal webserver
 
 #elif STRAND
 
